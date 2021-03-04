@@ -1,8 +1,3 @@
-function socket(req, res, next) {
-  res.io = io
-  next()
-}
-
 function notFound(req, res, next) {
   res.status(404)
   const error = new Error(`🔍 - Not Found - ${req.originalUrl}`)
@@ -21,7 +16,6 @@ function errorHandler(err, req, res, next) {
 }
 
 module.exports = {
-  socket,
   notFound,
   errorHandler,
 }

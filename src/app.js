@@ -5,6 +5,8 @@ const cors = require('cors')
 const middlewares = require('./middlewares')
 require('dotenv').config()
 
+const port = process.env.PORT || 5005
+
 const app = express()
 
 app.use(morgan('dev'))
@@ -14,10 +16,15 @@ app.use(express.json())
 
 const httpServer = require('http').Server(app)
 const io = require('socket.io')(httpServer, {
-  cors: 'localhost:8080',
+  cors: {
+    origin: false,
+  },
 })
 
-app.use(middlewares.socket)
+app.use((req, res, next) => {
+  res.io = io
+  next()
+})
 
 io.on('connection', (socket) => {
   console.log('headshake', socket.handshake)
@@ -31,4 +38,8 @@ app.get('/', function (req, res, next) {
 app.use(middlewares.notFound)
 app.use(middlewares.errorHandler)
 
-module.exports = app
+app.listen(port, () => {
+  /* eslint-disable no-console */
+  console.log(`Listening: http://localhost:${port}`)
+  /* eslint-enable no-console */
+})
