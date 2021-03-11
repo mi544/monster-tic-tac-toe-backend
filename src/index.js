@@ -1,6 +1,6 @@
 const { app } = require('./app.js')
 
-const PORT = process.env.PORT || 5005
+const PORT = process.env.PORT || 5002
 
 const appInstance = app.listen(PORT, () => {
   /* eslint-disable no-console */
