@@ -5,8 +5,6 @@ const cors = require('cors')
 const middlewares = require('./middlewares')
 require('dotenv').config()
 
-const PORT = process.env.PORT || 5005
-
 const app = express()
 
 app.use(morgan('dev'))
@@ -21,16 +19,4 @@ app.get('/', function (req, res) {
 app.use(middlewares.notFound)
 app.use(middlewares.errorHandler)
 
-const appInstance = app.listen(PORT, () => {
-  /* eslint-disable no-console */
-  console.log(`Listening: http://localhost:${PORT}`)
-})
-
-const io = require('socket.io')(appInstance, {
-  cors: { origin: 'http://localhost:8080' },
-})
-
-io.on('connection', function (socket) {
-  console.log('made socket connection')
-  socket.emit('bryan', 'is nice')
-})
+module.exports = { app }
