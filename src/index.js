@@ -8,7 +8,7 @@ const appInstance = app.listen(PORT, () => {
 })
 
 const io = require('socket.io')(appInstance, {
-  cors: { origin: 'http://localhost:8080' },
+  cors: { origin: 'http://localhost:8086' },
 })
 
 module.exports = { io }
